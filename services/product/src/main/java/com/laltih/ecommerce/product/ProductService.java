@@ -1,6 +1,5 @@
 package com.laltih.ecommerce.product;
 
-
 import com.laltih.ecommerce.exception.ProductPurchaseException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository repository;
-    private ProductMapper mapper;
+    private final ProductRepository repository; // Mark as final
+    private final ProductMapper mapper; // Mark as final
 
     public Integer createProduct(ProductRequest request) {
         var product = mapper.toProduct(request);
@@ -29,7 +28,7 @@ public class ProductService {
                 .toList();
         var storedProducts = repository.findAllByIdInOrderById(productIds);
         if (productIds.size() != storedProducts.size()) {
-            throw new ProductPurchaseException("One or more products don't exists");
+            throw new ProductPurchaseException("One or more products don't exist");
         }
         var storedRequest = requests
                 .stream()
@@ -53,7 +52,7 @@ public class ProductService {
     public ProductResponse findById(Integer productId) {
         return repository.findById(productId)
                 .map(mapper::toProductResponse)
-                .orElseThrow(() -> new EntityNotFoundException("product not found with ID : " + productId));
+                .orElseThrow(() -> new EntityNotFoundException("product not found with ID: " + productId));
     }
 
     public List<ProductResponse> getAllProducts() {

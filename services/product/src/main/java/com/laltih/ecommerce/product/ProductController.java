@@ -26,8 +26,8 @@ public class ProductController {
         return ResponseEntity.ok(service.purchaseProducts(requests));
     }
 
-    @GetMapping("/{product-id}")
-    public ResponseEntity<ProductResponse> findById(@PathVariable("product-id") Integer productId) {
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponse> findById(@PathVariable("productId") Integer productId) {
         return ResponseEntity.ok(service.findById(productId));
     }
 
