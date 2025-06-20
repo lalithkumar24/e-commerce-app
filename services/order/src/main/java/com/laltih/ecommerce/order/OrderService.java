@@ -6,6 +6,8 @@ import com.laltih.ecommerce.kafka.OrderConfirmation;
 import com.laltih.ecommerce.kafka.OrderProducer;
 import com.laltih.ecommerce.orderline.OrderLineRequest;
 import com.laltih.ecommerce.orderline.OrderLineService;
+import com.laltih.ecommerce.payment.PaymentClient;
+import com.laltih.ecommerce.payment.PaymentRequest;
 import com.laltih.ecommerce.product.ProductClient;
 import com.laltih.ecommerce.product.PurchaseRequest;
 import jakarta.validation.Valid;
@@ -24,6 +26,9 @@ public class OrderService {
     private  final OrderMapper mapper;
     private  final OrderLineService orderLineService;
     private  final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
+
+
     public Integer createdOrder(@Valid OrderRequest request) {
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Can't create order with id " + request.customerId() + " because customer not found"));
@@ -42,8 +47,15 @@ public class OrderService {
                     )
             );
         }
-        // todo  start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
 
+        paymentClient.requestOrderPayment(paymentRequest);
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(

@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://172.24.190.23:5432/order
+    username: lalith
+    password: 2004
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: paymentConfirmation:com.lalith.ecommerce.notification.PaymentNotificationRequest
+
+server:
+  port: 9030
