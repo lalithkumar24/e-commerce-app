@@ -1,13 +1,13 @@
-package com.lalith.ecommerce;
+package com.lalith.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PaymentApplication {
+public class GatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PaymentApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 
 }

@@ -1,10 +1,10 @@
-package com.lalith.ecommerce;
+package com.lalith.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PaymentApplicationTests {
+class GatewayApplicationTests {
 
     @Test
     void contextLoads() {
