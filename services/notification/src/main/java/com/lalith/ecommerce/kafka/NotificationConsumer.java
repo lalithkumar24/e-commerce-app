@@ -1,16 +1,13 @@
 package com.lalith.ecommerce.kafka;
 
 import com.lalith.ecommerce.email.EmailService;
-import com.lalith.ecommerce.kafka.order.OrderConformation;
-import com.lalith.ecommerce.kafka.payment.PaymentConformation;
-import com.lalith.ecommerce.kafka.payment.PaymentMethod;
+import com.lalith.ecommerce.kafka.order.OrderConfirmation;
+import com.lalith.ecommerce.kafka.payment.PaymentConfirmation;
 import com.lalith.ecommerce.notification.Notification;
 import com.lalith.ecommerce.notification.NotificationRepository;
-import com.lalith.ecommerce.notification.NotificationType;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +22,7 @@ public class NotificationConsumer {
     private final NotificationRepository repository;
     private final EmailService emailService;
     @KafkaListener(topics = "payment-topic")
-    public void consumePaymentSuccessNotification(PaymentConformation paymentConformation) throws MessagingException {
+    public void consumePaymentSuccessNotification(PaymentConfirmation paymentConformation) throws MessagingException {
         log.info("Received Payment Success Notification: {}", paymentConformation);
         repository.save(
                 Notification.builder()
@@ -44,7 +41,7 @@ public class NotificationConsumer {
     }
 
     @KafkaListener(topics = "order-topic")
-    public void consumeOrderConformationNotification(OrderConformation orderConformation) throws MessagingException {
+    public void consumeOrderConformationNotification(OrderConfirmation orderConformation) throws MessagingException {
         log.info("Received Payment Success Notification: {}", orderConformation);
         repository.save(
                 Notification.builder()
