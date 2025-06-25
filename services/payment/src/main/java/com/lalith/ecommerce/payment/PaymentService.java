@@ -25,4 +25,8 @@ public class PaymentService {
         );
         return payment.getId();
     }
+
+    public Payment getPaymentDetalis(Integer orderId) {
+        return repository.findByOrderId(orderId);
+    }
 }

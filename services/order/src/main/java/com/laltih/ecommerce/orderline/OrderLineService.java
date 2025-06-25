@@ -1,5 +1,7 @@
 package com.laltih.ecommerce.orderline;
 
+import com.laltih.ecommerce.order.Order;
+import com.laltih.ecommerce.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +13,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderLineService {
     private final OrderLineRepository repository;
+    private final OrderRepository orderRepository;
     private final OrderLineMapper mapper;
     public Integer saveOrderLine(OrderLineRequest orderLineRequest) {
-
-        var order = mapper.toOrderLine(orderLineRequest);
-        return repository.save(order).getId();
+        Order managedOrder = orderRepository.getReferenceById(orderLineRequest.Orderid());
+        OrderLine line = mapper.toOrderLine(orderLineRequest);
+        line.setOrder(managedOrder);
+        return repository.save(line).getId();
     }
 
     public List<OrderLineResponse> findAllByOrderId(Integer orderId) {

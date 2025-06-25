@@ -2,37 +2,42 @@ server:
   port: 8222
 spring:
   cloud:
-    compatibility-verifier:
-      enabled: false
     gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: false
-          routes:
-            - id: product-route
-              uri: lb://PRODUCT-SERVICE
-              predicates:
-                - Path=/api/v1/products/**
-            - id: customer-route
-              uri: lb://CUSTOMER-SERVICE
-              predicates:
-                - Path=/api/v1/customers/**
-            - id: order-route
-              uri: lb://ORDER-SERVICE
-              predicates:
-                - Path=/api/v1/orders/**
-            - id: payment-route
-              uri: lb://PAYMENT-SERVICE
-              predicates:
-                - Path=/api/v1/payments/**
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: customer-service
+          uri: lb:http://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
+        - id: order-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+        - id: order-lines-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/order-lines/**
+        - id: product-service
+          uri: lb:http://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+        - id: payment-service
+          uri: lb:http://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payments/**
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    discovery:
+      client:
+        service-url:
+          defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 logging:
   level:

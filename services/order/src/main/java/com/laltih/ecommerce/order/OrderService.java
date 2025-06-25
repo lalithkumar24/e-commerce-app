@@ -13,6 +13,7 @@ import com.laltih.ecommerce.product.PurchaseRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class OrderService {
     private  final OrderProducer orderProducer;
     private final PaymentClient paymentClient;
 
-
+    @Transactional
     public Integer createdOrder(@Valid OrderRequest request) {
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Can't create order with id " + request.customerId() + " because customer not found"));
@@ -38,6 +39,12 @@ public class OrderService {
         var order = this.repository.save(mapper.toOrder(request));
 
         for (PurchaseRequest purchaseRequest : request.products()){
+            System.out.println("Product ID: " + purchaseRequest.productId());
+
+            if (purchaseRequest.productId() == null) {
+                throw new IllegalArgumentException("Product ID in request is null");
+            }
+
             orderLineService.saveOrderLine(
                     new OrderLineRequest(
                             null,

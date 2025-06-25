@@ -36,6 +36,10 @@ public class EmailService {
             BigDecimal amount,
             String orderReference
     )throws MessagingException{
+        if (destinationEmail == null || destinationEmail.isBlank()) {
+            log.warn("Cannot send payment email: destination email is null or empty");
+            return;
+        }
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MULTIPART_MODE_RELATED, UTF_8.name());
         messageHelper.setFrom("lalithkumaur@gamil.com");

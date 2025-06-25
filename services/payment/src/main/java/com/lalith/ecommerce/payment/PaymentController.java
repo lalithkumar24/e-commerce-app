@@ -3,10 +3,7 @@ package com.lalith.ecommerce.payment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/payments")
@@ -20,5 +17,9 @@ public class PaymentController {
             @RequestBody @Valid PaymentRequest request
     ){
         return ResponseEntity.ok(service.createPayment(request));
+    }
+    @GetMapping("/{order-id}")
+    public  ResponseEntity<Payment> getPayment(@PathVariable("order-id") Integer orderId)  {
+        return  ResponseEntity.ok(service.getPaymentDetalis(orderId));
     }
 }

@@ -8,8 +8,8 @@ public record PaymentNotificationRequest(
         String orderReference,
         BigDecimal totalAmount,
         PaymentMethod paymentMethod,
-        String CustomerFirstName,
-        String CustomerLastName,
-        String CustomerEmail
+        String customerFirstName,
+        String customerLastName,
+        String customerEmail
 ) {
 }
