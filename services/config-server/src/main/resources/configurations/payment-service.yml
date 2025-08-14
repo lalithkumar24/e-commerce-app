@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://172.24.190.23:5432/order
+    url: jdbc:postgresql://localhost:5432/order
     username: lalith
     password: 2004
     driver-class-name: org.postgresql.Driver

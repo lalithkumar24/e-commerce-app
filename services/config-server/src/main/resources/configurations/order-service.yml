@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://172.24.190.23:5432/order
+    url: jdbc:postgresql://localhost:5432/order
     username: lalith
     password: 2004
     driver-class-name: org.postgresql.Driver
@@ -15,9 +15,9 @@ spring:
     database: POSTGRESQL
   kafka:
     producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      bootstrap-servers: "localhost:9092"
+      key-serializer: "org.apache.kafka.common.serialization.StringSerializer"
+      value-serializer: "org.springframework.kafka.support.serializer.JsonSerializer"
       properties:
         spring.json.type.mapping: orderConfirmation:com.laltih.ecommerce.kafka.OrderConfirmation
 server:

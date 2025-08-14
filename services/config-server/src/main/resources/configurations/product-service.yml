@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://172.24.190.23:5432/product
+    url: jdbc:postgresql://localhost:5432/product
     username: lalith
     password: 2004
     driver-class-name: org.postgresql.Driver
@@ -16,7 +16,7 @@ spring:
     baseline-on-migrate: true
     enabled: true
     baseline-description: "init"
-    baseline-version: 0
+    baseline-version: "0"
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 server:
